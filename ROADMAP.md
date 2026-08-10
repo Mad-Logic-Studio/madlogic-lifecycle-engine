@@ -1,78 +1,83 @@
-# Roadmap
+# MadLogic Lifecycle Engine Roadmap
 
-## WP1 — Event Hub & Identity Map
+## WP1 — Event Hub & Customer Identity Map — IN PROGRESS
 
-- normalized event envelope
-- provider event deduplication
-- customer/subject identity map
-- provider identity links
+Current implementation on `foundation/lifecycle-engine-v1` includes:
+
+- provider-neutral lifecycle event contract
+- deterministic provider-event deduplication
 - correlation IDs
-- lifecycle state foundation
+- internal subject identity model
+- provider identity linking
+- normalized email/phone helpers
+- Supabase reference migration
+- deterministic unit tests
+- CI build/test gate
 
-## WP2 — Webhook Intake
+Remaining before WP1 is complete:
 
-- authenticated webhook receiver contract
-- provider verification adapters
-- async processing pattern
-- retry/error states
-- dead-letter/review queue
+- review CI results and resolve any build/test issues
+- add Postgres-level migration verification
+- define lifecycle-state persistence separately from provider identity
+- add event processing transition helpers (`received -> processing -> processed/failed/dead_letter`)
+
+## WP2 — Authenticated Webhook Intake & Event Processing
+
+- provider verification interface
+- bounded request handling
+- normalized event persistence
+- fast acknowledgement pattern
+- asynchronous processing
+- retry/error/dead-letter states
+- idempotency and replay safety
 
 ## WP3 — Provider Adapters
 
-Initial proving adapters:
+Initial adapters:
 
-- Square: commerce/orders/payments
-- MailerLite: CRM/subscriber lifecycle
-- Trafft: booking/customer/appointment lifecycle
+- Square — commerce/orders/payments/customer references
+- MailerLite — CRM/subscribers/groups/automation lifecycle
+- Trafft — booking/customers/services/appointments
 
-Adapters must remain replaceable and must not leak provider-specific assumptions into core modules.
+Adapters remain replaceable; the core must not depend on vendor-specific models.
 
-## WP4 — Lifecycle Rules
+## WP4 — Lifecycle Rules & Governed Actions
 
-- deterministic workflow rules
-- lifecycle transitions
-- idempotent safe actions
-- approval boundary for consequential mutations
-- configurable deployment mappings
+- lifecycle state transitions
+- configuration-driven workflow rules
+- safe idempotent actions
+- explicit review/confirmation boundary for consequential writes
 
-## WP5 — Reconciliation Engine
+## WP5 — Cross-System Reconciliation
 
-- cross-provider consistency checks
-- paid/not-booked detection
-- booked/expected-payment-missing detection
-- CRM state drift
-- duplicate identity detection
-- failed-event reconciliation
+Detect and classify drift such as:
+
+- paid but not booked
+- booked but expected payment missing
+- purchaser missing from CRM
+- stale CRM lifecycle state
+- duplicate provider identities
+- failed event processing
 
 ## WP6 — MCP Operator Layer
 
-- read-only inspection surface
-- controlled admin surface
-- authorization model
-- tool-level safety annotations
-- metadata-only write audit
+- broad read-only inspection MCP
+- narrow admin mutation MCP
+- standards-based authentication and server-side authorization
+- metadata-only operational/write audit
 
-## WP7 — Operations Audit
+## WP7 — Unified Operations Audit
 
-One normalized report spanning:
+Produce one normalized report spanning commerce, CRM, booking, event failures, reconciliation findings, and recent admin writes while minimizing PII.
 
-- commerce
-- CRM
-- booking
-- cross-system mismatches
-- webhook processing failures
-- recent admin writes
-- unresolved reconciliation findings
-
-## WP8 — Packaging & Deployment
+## WP8 — Packaging & Reference Deployment
 
 - reference Supabase deployment
-- environment/config templates
-- migration packaging
-- adapter configuration
-- local development setup
+- migrations and environment templates
+- CI/test gates
 - optional container/CLI packaging if justified
+- generic service-business example
 
-## Future / parked
+## Future — Productization
 
-Productization is intentionally not an active workstream. Revisit only after sustained production use and external demand signals.
+Tracked as a parking-lot GitHub issue only. Productization must not delay the production proving work.
