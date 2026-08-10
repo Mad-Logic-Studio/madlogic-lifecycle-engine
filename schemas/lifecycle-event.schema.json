@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/madlogic/lifecycle-event.schema.json",
+  "title": "MadLogic Lifecycle Event",
+  "type": "object",
+  "required": ["eventId", "provider", "eventType", "providerEventId", "occurredAt", "receivedAt", "correlationId", "status", "payload"],
+  "properties": {
+    "eventId": { "type": "string", "minLength": 1 },
+    "provider": { "type": "string", "minLength": 1 },
+    "eventType": { "type": "string", "minLength": 1 },
+    "providerEventId": { "type": "string", "minLength": 1 },
+    "subjectId": { "type": "string", "minLength": 1 },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "receivedAt": { "type": "string", "format": "date-time" },
+    "correlationId": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["received", "processing", "processed", "failed", "dead_letter"] },
+    "payload": {}
+  },
+  "additionalProperties": false
+}

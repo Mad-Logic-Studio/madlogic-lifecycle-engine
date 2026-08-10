@@ -1,0 +1,19 @@
+{
+  "name": "@madlogic/lifecycle-engine",
+  "version": "0.1.0-dev",
+  "private": true,
+  "type": "module",
+  "description": "Provider-neutral event-driven customer lifecycle orchestration engine.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "npm run build && npm test",
+    "test": "node --test build/tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.0"
+  }
+}

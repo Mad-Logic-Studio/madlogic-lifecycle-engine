@@ -1,0 +1,22 @@
+{
+  "providers": [
+    { "provider": "square", "role": "commerce", "enabled": true },
+    { "provider": "mailerlite", "role": "crm", "enabled": true },
+    { "provider": "trafft", "role": "booking", "enabled": true }
+  ],
+  "offers": [
+    {
+      "key": "example-service",
+      "commerceProductRef": "product_example",
+      "crmGroupRefs": ["group_purchaser_example"],
+      "bookingServiceRef": "service_example",
+      "requiresPayment": true,
+      "requiresBooking": true
+    }
+  ],
+  "automaticRepairCodes": [
+    "paid_missing_crm",
+    "booked_missing_crm",
+    "crm_group_drift"
+  ]
+}

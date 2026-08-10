@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/madlogic/reconciliation-finding.schema.json",
+  "title": "MadLogic Reconciliation Finding",
+  "type": "object",
+  "required": ["code", "subjectId", "severity", "repairSafety", "message"],
+  "properties": {
+    "code": { "type": "string", "minLength": 1 },
+    "subjectId": { "type": "string", "minLength": 1 },
+    "severity": { "enum": ["info", "warning", "critical"] },
+    "repairSafety": { "enum": ["report_only", "safe_idempotent", "review_required"] },
+    "message": { "type": "string", "minLength": 1 },
+    "details": { "type": "object" }
+  },
+  "additionalProperties": false
+}
