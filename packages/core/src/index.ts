@@ -11,3 +11,4 @@ export * from './reconciliation.js';
 export * from './mcp-policy.js';
 export * from './operations-audit.js';
 export * from './engine.js';
+export * from './config.js';
