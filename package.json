@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check": "npm run build && npm test",
-    "test": "node --test build/tests/**/*.test.js"
+    "test": "node --test build/tests/*.test.js"
   },
   "engines": {
     "node": ">=20"
