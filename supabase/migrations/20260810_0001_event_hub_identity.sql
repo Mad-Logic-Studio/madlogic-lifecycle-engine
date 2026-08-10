@@ -55,6 +55,20 @@ create index if not exists lifecycle_events_status_idx
 create index if not exists lifecycle_events_provider_type_idx
   on public.lifecycle_events(provider, event_type, received_at desc);
 
+create table if not exists public.lifecycle_states (
+  subject_id uuid primary key references public.lifecycle_subjects(id) on delete cascade,
+  stage text not null check (stage in (
+    'lead','prospect','purchaser','needs_fulfillment','booked','completed','follow_up','returning_customer'
+  )),
+  source_event_id text,
+  changed_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists lifecycle_states_stage_idx
+  on public.lifecycle_states(stage, changed_at desc);
+
 comment on table public.lifecycle_subjects is 'Provider-neutral lifecycle subjects. Tenant deployments should enforce their own RLS/service-role boundary.';
 comment on table public.provider_identities is 'Links provider-specific identities to an internal lifecycle subject.';
 comment on table public.lifecycle_events is 'Normalized lifecycle event ledger. Production payload retention/minimization is deployment policy.';
+comment on table public.lifecycle_states is 'Current provider-neutral lifecycle stage for each subject; transition validity is enforced by the engine.';
